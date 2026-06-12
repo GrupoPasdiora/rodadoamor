@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roda Afetiva | Teste Completo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --vinho: #7d2036;
+      --vinho-escuro: #581326;
+      --vinho-suave: #9f4258;
+      --dourado: #c8a56a;
+      --dourado-claro: #ead7b6;
+      --marfim: #fffaf6;
+      --nude: #f4e8df;
+      --nude-2: #eadbd2;
+      --taupe: #8a7872;
+      --texto: #302323;
+      --texto-suave: #695b57;
+      --branco: rgba(255,255,255,.78);
+      --borda: rgba(125,32,54,.13);
+      --sombra: 0 26px 70px rgba(88, 19, 38, .14);
+
+      --presenca: #8b5ed7;
+      --palavras: #c75f91;
+      --toque: #d3a24f;
+      --cuidado: #7f6f65;
+      --gestos: #b44a57;
+
+      --raio: 30px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--texto);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(200,165,106,.25), transparent 30%),
+        radial-gradient(circle at 88% 14%, rgba(125,32,54,.13), transparent 28%),
+        radial-gradient(circle at 76% 88%, rgba(177,90,114,.10), transparent 32%),
+        linear-gradient(135deg, #fffaf6 0%, #f5e9e1 52%, #efe0d8 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(200,165,106,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,165,106,.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(circle at center, black, transparent 84%);
+    }
+
+    button, input { font: inherit; }
+
+    .pagina {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0 28px;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .marca-icone {
+      width: 48px;
+      height: 48px;
+      border-radius: 17px;
+      background:
+        radial-gradient(circle at 28% 24%, rgba(255,255,255,.38), transparent 26%),
+        linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      box-shadow: 0 16px 34px rgba(88,19,38,.23);
+      border: 1px solid rgba(255,255,255,.22);
+    }
+
+    .marca-nome {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 36px;
+      line-height: .9;
+      font-weight: 600;
+      color: var(--vinho-escuro);
+      letter-spacing: .01em;
+    }
+
+    .marca-sub {
+      margin-top: 5px;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .selo {
+      border: 1px solid rgba(200,165,106,.35);
+      background: rgba(255,255,255,.58);
+      border-radius: 999px;
+      padding: 11px 15px;
+      color: var(--texto-suave);
+      font-size: 13px;
+      backdrop-filter: blur(14px);
+      max-width: 440px;
+      text-align: center;
+    }
+
+    .cartao {
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.68));
+      border: 1px solid var(--borda);
+      border-radius: calc(var(--raio) + 8px);
+      box-shadow: var(--sombra);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 28px;
+      align-items: center;
+      padding: 12px 0 42px;
+    }
+
+    .hero-texto {
+      padding: clamp(28px, 5vw, 60px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-texto::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -96px;
+      top: -96px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,165,106,.25), transparent 68%);
+    }
+
+    .etiqueta {
+      width: max-content;
+      max-width: 100%;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(200,165,106,.32);
+      background: rgba(125,32,54,.055);
+      color: var(--vinho);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      color: var(--vinho-escuro);
+      font-weight: 500;
+      letter-spacing: .01em;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(48px, 7vw, 84px);
+      line-height: .88;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitulo {
+      margin: 24px 0 30px;
+      color: var(--texto-suave);
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height: 1.72;
+      max-width: 720px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .acoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .botao {
+      border: 0;
+      min-height: 54px;
+      border-radius: 999px;
+      padding: 15px 23px;
+      font-weight: 760;
+      letter-spacing: .01em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .botao:hover { transform: translateY(-2px); }
+    .botao:active { transform: translateY(1px) scale(.99); }
+
+    .primario {
+      background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+      color: white;
+      box-shadow: 0 18px 42px rgba(88,19,38,.24);
+    }
+
+    .secundario {
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(200,165,106,.38);
+      color: var(--vinho-escuro);
+    }
+
+    .fantasma {
+      background: transparent;
+      color: var(--vinho);
+      border: 1px dashed rgba(200,165,106,.48);
+    }
+
+    .visual-roda {
+      min-height: 550px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .visual-roda::before {
+      content: "";
+      position: absolute;
+      inset: 32px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from -90deg,
+        rgba(139,94,215,.90) 0 72deg,
+        rgba(199,95,145,.88) 72deg 144deg,
+        rgba(211,162,79,.90) 144deg 216deg,
+        rgba(127,111,101,.88) 216deg 288deg,
+        rgba(180,74,87,.90) 288deg 360deg
+      );
+      mask: radial-gradient(circle, transparent 0 22%, black 23% 67%, transparent 68%);
+      animation: giro 22s linear infinite;
+    }
+
+    @keyframes giro { to { transform: rotate(360deg); } }
+
+    .visual-roda::after {
+      content: "";
+      position: absolute;
+      width: 235px;
+      height: 235px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(200,165,106,.34);
+      box-shadow: 0 18px 50px rgba(88,19,38,.10);
+    }
+
+    .centro-roda {
+      z-index: 2;
+      width: 224px;
+      height: 224px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--vinho-escuro);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 32px;
+      line-height: 1.02;
+      padding: 28px;
+    }
+
+    .nota-flutuante {
+      position: absolute;
+      z-index: 3;
+      max-width: 190px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(200,165,106,.34);
+      border-radius: 19px;
+      padding: 13px 15px;
+      color: var(--texto-suave);
+      font-size: 13px;
+      line-height: 1.5;
+      box-shadow: 0 12px 30px rgba(80,34,46,.08);
+      animation: flutuar 4s ease-in-out infinite;
+    }
+
+    .nota-flutuante strong {
+      display: block;
+      color: var(--vinho);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 21px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .n1 { left: 24px; top: 44px; }
+    .n2 { right: 24px; bottom: 54px; animation-delay: -1.5s; }
+    .n3 { left: 40px; bottom: 68px; animation-delay: -2.8s; }
+
+    @keyframes flutuar { 50% { transform: translateY(-10px); } }
+
+    .explicacao {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .passo {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(200,165,106,.26);
+      min-height: 150px;
+    }
+
+    .passo-num {
+      color: var(--dourado);
+      font-weight: 850;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .passo h3 {
+      font-size: 28px;
+      line-height: .96;
+      margin-bottom: 10px;
+    }
+
+    .passo p {
+      margin: 0;
+      color: var(--texto-suave);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .app, .resultado { display: none; padding-bottom: 70px; }
+    .app.ativo, .resultado.ativo { display: block; animation: surgir .42s ease both; }
+
+    @keyframes surgir {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quiz {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .painel {
+      padding: 24px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .painel h2 {
+      font-size: 42px;
+      line-height: .92;
+      margin-bottom: 16px;
+    }
+
+    .texto-pequeno {
+      color: var(--taupe);
+      font-size: 13px;
+      line-height: 1.58;
+    }
+
+    .progresso-box { margin: 20px 0 24px; }
+
+    .progresso-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--taupe);
+      font-size: 13px;
+      font-weight: 750;
+      margin-bottom: 9px;
+    }
+
+    .progresso {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(125,32,54,.08);
+      border: 1px solid rgba(200,165,106,.18);
+      overflow: hidden;
+    }
+
+    .progresso-barra {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--vinho), var(--dourado));
+      transition: width .34s ease;
+    }
+
+    .legenda {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .legenda-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .bolinha {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .pergunta-card {
+      min-height: 620px;
+      padding: clamp(24px, 4vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pergunta-card::before {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      right: -92px;
+      top: -92px;
+      background: radial-gradient(circle, rgba(200,165,106,.20), transparent 70%);
+    }
+
+    .bloco {
+      color: var(--dourado);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .pergunta-titulo {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: .95;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .ajuda {
+      margin: 0 0 26px;
+      color: var(--texto-suave);
+      line-height: 1.7;
+      font-size: 15px;
+      position: relative;
+    }
+
+    .opcoes {
+      display: grid;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .opcao {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(125,32,54,.10);
+      background: rgba(255,255,255,.82);
+      border-radius: 20px;
+      padding: 16px 17px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .opcao:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200,165,106,.48);
+      box-shadow: 0 12px 28px rgba(80,34,46,.08);
+    }
+
+    .opcao.selecionada {
+      background: linear-gradient(135deg, rgba(125,32,54,.07), rgba(200,165,106,.08));
+      border-color: rgba(200,165,106,.52);
+      box-shadow: inset 0 0 0 1px rgba(200,165,106,.22);
+    }
+
+    .letra {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      background: rgba(200,165,106,.18);
+      color: var(--vinho-escuro);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 1px;
+    }
+
+    .opcao-texto {
+      font-weight: 710;
+      line-height: 1.42;
+      color: var(--texto);
+    }
+
+    .mapa-opcao {
+      display: none;
+      margin-top: 4px;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+
+    .dev .mapa-opcao { display: block; }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .formulario {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .campo { display: grid; gap: 7px; }
+
+    .campo label {
+      font-size: 13px;
+      color: var(--texto-suave);
+      font-weight: 750;
+    }
+
+    .campo input {
+      border: 1px solid rgba(125,32,54,.12);
+      border-radius: 18px;
+      padding: 15px 16px;
+      outline: none;
+      background: rgba(255,255,255,.86);
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .campo input:focus {
+      border-color: rgba(200,165,106,.58);
+      box-shadow: 0 0 0 4px rgba(200,165,106,.13);
+    }
+
+    .modo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .modo-card {
+      border: 1px solid rgba(125,32,54,.10);
+      border-radius: 20px;
+      padding: 16px;
+      cursor: pointer;
+      background: rgba(255,255,255,.76);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .modo-card:hover, .modo-card.selecionado {
+      transform: translateY(-2px);
+      border-color: rgba(200,165,106,.52);
+      background: linear-gradient(135deg, rgba(125,32,54,.05), rgba(200,165,106,.09));
+    }
+
+    .modo-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--vinho-escuro);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .resultado-grid {
+      display: grid;
+      grid-template-columns: 1fr .92fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+
+    .resultado-card {
+      padding: clamp(24px, 4vw, 42px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resultado-card h2 {
+      font-size: clamp(42px, 5vw, 62px);
+      line-height: .9;
+      margin-bottom: 16px;
+    }
+
+    .resultado-card p {
+      color: var(--texto-suave);
+      line-height: 1.7;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 22px 0;
+    }
+
+    .tab {
+      border: 1px solid rgba(200,165,106,.34);
+      background: rgba(255,255,255,.78);
+      color: var(--taupe);
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight: 740;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .tab.ativa {
+      background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(88,19,38,.16);
+    }
+
+    .grafico-card {
+      padding: 22px;
+      display: grid;
+      place-items: center;
+      min-height: 500px;
+    }
+
+    #radar {
+      width: min(100%, 460px);
+      max-width: 460px;
+      aspect-ratio: 1;
+      background: rgba(255,255,255,.44);
+      border-radius: 30px;
+    }
+
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mini {
+      padding: 20px;
+      min-height: 178px;
+    }
+
+    .mini h3 {
+      font-size: 32px;
+      line-height: .95;
+      margin-bottom: 10px;
+    }
+
+    .mini p {
+      margin: 0;
+      color: var(--texto-suave);
+      line-height: 1.68;
+      font-size: 14.8px;
+    }
+
+    .lista-pontos {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .linha-ponto {
+      display: grid;
+      grid-template-columns: 145px 1fr 34px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--texto-suave);
+    }
+
+    .barra {
+      height: 10px;
+      background: rgba(125,32,54,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(200,165,106,.16);
+    }
+
+    .barra span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      transition: width .8s ease;
+    }
+
+    .fala {
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(200,165,106,.13), rgba(125,32,54,.05));
+      border: 1px solid rgba(200,165,106,.26);
+      border-radius: 22px;
+      padding: 18px;
+      color: var(--vinho-escuro);
+      line-height: 1.66;
+    }
+
+    .rodape {
+      padding: 30px 10px;
+      color: var(--taupe);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 940px) {
+      .hero, .quiz, .resultado-grid { grid-template-columns: 1fr; }
+      .painel { position: static; }
+      .visual-roda { min-height: 430px; }
+      .explicacao, .insights { grid-template-columns: 1fr; }
+      .linha-ponto { grid-template-columns: 130px 1fr 30px; }
+    }
+
+    @media (max-width: 560px) {
+      .pagina { padding: 16px; }
+      .topo { flex-direction: column; align-items: flex-start; }
+      .marca-nome { font-size: 31px; }
+      .selo { text-align: left; }
+      .modo-grid { grid-template-columns: 1fr; }
+      .nav { flex-direction: column; align-items: stretch; }
+      .botao { width: 100%; }
+      .nota-flutuante { display: none; }
+      .visual-roda::before { inset: 18px; }
+      h1 { font-size: 49px; }
+      .pergunta-titulo { font-size: 38px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .topo, .hero, .app, .acoes, .tabs, .rodape, .explicacao { display: none !important; }
+      .resultado { display: block !important; }
+      .resultado-grid, .insights { grid-template-columns: 1fr; }
+      .cartao { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="pagina">
+    <header class="topo">
+      <div class="marca">
+        <div class="marca-icone">♡</div>
+        <div>
+          <div class="marca-nome">Roda Afetiva</div>
+          <div class="marca-sub">mapa das formas de amar</div>
+        </div>
+      </div>
+      <div class="selo">Um teste guiado para entender como você sente, demonstra e percebe o amor.</div>
+    </header>
+
+    <section class="hero" id="hero">
+      <div class="cartao hero-texto">
+        <div class="etiqueta">Teste em formato Roda da Vida</div>
+        <h1>Descubra seu jeito de sentir e demonstrar amor.</h1>
+        <p class="subtitulo">
+          Responda situações reais do cotidiano e receba um mapa afetivo com quatro leituras:
+          o que faz você se sentir amada, como você costuma demonstrar amor, o que mais dói quando falta
+          e como você percebe o jeito do parceiro amar.
+        </p>
+        <div class="acoes">
+          <button class="botao primario" onclick="iniciar()">Começar minha Roda Afetiva</button>
+          <button class="botao secundario" onclick="document.getElementById('como-funciona').scrollIntoView({behavior:'smooth'})">Entender como funciona</button>
+        </div>
+      </div>
+
+      <div class="cartao visual-roda">
+        <div class="nota-flutuante n1"><strong>Eu sinto</strong>O que faz você se sentir escolhida, vista e amada.</div>
+        <div class="nota-flutuante n2"><strong>Eu demonstro</strong>Como seu afeto aparece nas atitudes do dia a dia.</div>
+        <div class="nota-flutuante n3"><strong>Parceiro</strong>Como você percebe o jeito dele entregar amor.</div>
+        <div class="centro-roda">Uma roda.<br>Quatro leituras.<br>Mais clareza.</div>
+      </div>
+    </section>
+
+    <section class="explicacao" id="como-funciona">
+      <div class="passo">
+        <div class="passo-num">01</div>
+        <h3>Cenas reais</h3>
+        <p>Você responde situações simples, como um dia difícil, uma frustração ou uma tentativa de aproximação.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">02</div>
+        <h3>Padrões</h3>
+        <p>Cada escolha revela uma tendência afetiva. A ferramenta soma os pontos sem exigir que você saiba se analisar.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">03</div>
+        <h3>Roda</h3>
+        <p>O resultado aparece em formato visual, com notas de 0 a 10 para cada forma de amar.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">04</div>
+        <h3>Conversa</h3>
+        <p>No final, você recebe uma frase prática para conversar com mais clareza e menos cobrança.</p>
+      </div>
+    </section>
+
+    <section class="app" id="app">
+      <div class="quiz">
+        <aside class="cartao painel">
+          <div class="etiqueta">Etapa do teste</div>
+          <h2>Sua descoberta guiada</h2>
+          <p class="texto-pequeno">
+            Escolha a alternativa que parece mais verdadeira para você. Não responda o que seria bonito. Responda o que mais toca, incomoda ou aparece na sua vida real.
+          </p>
+
+          <div class="progresso-box">
+            <div class="progresso-label">
+              <span id="progressoTexto">Início</span>
+              <span id="progressoNumero">0%</span>
+            </div>
+            <div class="progresso"><div class="progresso-barra" id="progressoBarra"></div></div>
+          </div>
+
+          <div class="legenda">
+            <div class="legenda-item"><span class="bolinha" style="background:var(--presenca)"></span>Presença e tempo de qualidade</div>
+            <div class="legenda-item"><span class="bolinha" style="background:var(--palavras)"></span>Palavras e reconhecimento</div>
+            <div class="legenda-item"><span class="bolinha" style="background:var(--toque)"></span>Toque e carinho físico</div>
+            <div class="legenda-item"><span class="bolinha" style="background:var(--cuidado)"></span>Cuidado prático e ajuda</div>
+            <div class="legenda-item"><span class="bolinha" style="background:var(--gestos)"></span>Gestos simbólicos e presentes</div>
+          </div>
+
+          <button class="botao fantasma" style="margin-top:22px;width:100%" onclick="alternarModoDev()">Ver categorias das respostas</button>
+        </aside>
+
+        <article class="cartao pergunta-card" id="perguntaCard"></article>
+      </div>
+    </section>
+
+    <section class="resultado" id="resultado">
+      <div class="resultado-grid">
+        <div class="cartao resultado-card">
+          <div class="etiqueta">Resultado</div>
+          <h2 id="tituloResultado">Sua Roda Afetiva</h2>
+          <p id="introResultado"></p>
+
+          <div class="tabs">
+            <button class="tab ativa" onclick="trocarGrafico('receber', this)">Eu sinto</button>
+            <button class="tab" onclick="trocarGrafico('dor', this)">O que dói</button>
+            <button class="tab" onclick="trocarGrafico('demonstrar', this)">Eu demonstro</button>
+            <button class="tab" onclick="trocarGrafico('parceiro', this)">Percebo no parceiro</button>
+            <button class="tab" onclick="trocarGrafico('comparativo', this)">Comparativo</button>
+          </div>
+
+          <div id="listas"></div>
+
+          <div class="fala" id="fraseConversa"></div>
+
+          <div class="acoes" style="margin-top:20px">
+            <button class="botao primario" onclick="compartilharWhatsApp()">Enviar resumo no WhatsApp</button>
+            <button class="botao secundario" onclick="window.print()">Salvar ou imprimir</button>
+            <button class="botao fantasma" onclick="refazer()">Refazer teste</button>
+          </div>
+        </div>
+
+        <div class="cartao grafico-card">
+          <canvas id="radar" width="920" height="920"></canvas>
+        </div>
+      </div>
+
+      <div class="insights">
+        <div class="cartao mini">
+          <h3>O que você mais precisa receber</h3>
+          <p id="insightReceber"></p>
+        </div>
+        <div class="cartao mini">
+          <h3>Como seu amor costuma aparecer</h3>
+          <p id="insightDemonstrar"></p>
+        </div>
+        <div class="cartao mini">
+          <h3>Possível desencontro</h3>
+          <p id="insightDesencontro"></p>
+        </div>
+      </div>
+
+      <div class="insights">
+        <div class="cartao mini">
+          <h3>Plano de 7 dias</h3>
+          <p id="plano7"></p>
+        </div>
+        <div class="cartao mini">
+          <h3>Próxima conversa</h3>
+          <p id="proximaConversa"></p>
+        </div>
+        <div class="cartao mini">
+          <h3>Leitura cuidadosa</h3>
+          <p>Este teste mostra padrões de resposta e percepção. Ele não define a verdade do casal. Para comparar com mais precisão, o parceiro também deve responder.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="rodape">
+      A Roda Afetiva é uma ferramenta de reflexão e autoconhecimento. Não substitui acompanhamento psicológico, terapia de casal ou orientação profissional.
+    </footer>
+  </main>
+
+  <script>
+    const TIPOS = {
+      presenca: {
+        nome: "Presença e tempo de qualidade",
+        curto: "Presença",
+        cor: "#8b5ed7",
+        recebe: "Você tende a se sentir amada quando existe presença real, escuta, atenção inteira e tempo sem distrações.",
+        entrega: "Você demonstra amor ficando junto, ouvindo, acompanhando, criando momentos e escolhendo presença.",
+        frase: "Eu me sinto amada quando temos um tempo nosso de verdade, sem distrações."
+      },
+      palavras: {
+        nome: "Palavras e reconhecimento",
+        curto: "Palavras",
+        cor: "#c75f91",
+        recebe: "Você tende a se sentir amada quando recebe palavras claras, elogios sinceros, validação e reconhecimento.",
+        entrega: "Você demonstra amor falando, incentivando, elogiando, mandando mensagens e colocando sentimento em palavras.",
+        frase: "Eu me sinto amada quando você me reconhece e fala com carinho o que sente por mim."
+      },
+      toque: {
+        nome: "Toque e carinho físico",
+        curto: "Toque",
+        cor: "#d3a24f",
+        recebe: "Você tende a se sentir amada quando existe abraço, beijo, colo, proximidade e carinho físico.",
+        entrega: "Você demonstra amor pelo corpo: abraço, toque, beijo, colo, proximidade e aconchego.",
+        frase: "Eu me sinto amada quando você se aproxima de mim com carinho, abraço e toque."
+      },
+      cuidado: {
+        nome: "Cuidado prático e ajuda",
+        curto: "Cuidado",
+        cor: "#7f6f65",
+        recebe: "Você tende a se sentir amada quando a pessoa percebe seu peso e faz algo concreto para aliviar sua vida.",
+        entrega: "Você demonstra amor cuidando, resolvendo, ajudando, organizando e tirando peso da vida do outro.",
+        frase: "Eu me sinto amada quando você percebe que estou sobrecarregada e faz algo prático para me ajudar."
+      },
+      gestos: {
+        nome: "Gestos simbólicos e presentes",
+        curto: "Gestos",
+        cor: "#b44a57",
+        recebe: "Você tende a se sentir amada quando a pessoa lembra de detalhes, datas, pequenas surpresas e símbolos com significado.",
+        entrega: "Você demonstra amor por lembranças, surpresas, presentes, detalhes e pequenos rituais de cuidado.",
+        frase: "Eu me sinto amada quando você lembra de detalhes que são importantes para mim."
+      }
+    };
+
+    const estado = {
+      perfil: { nome: "", parceiro: "", modo: "individual" },
+      atual: -1,
+      respostas: {},
+      mostrarCategorias: false,
+      grafico: "receber",
+      pontos: {
+        receber: base(),
+        dor: base(),
+        demonstrar: base(),
+        parceiro: base(),
+        parceiroRecebe: base()
+      }
+    };
+
+    function base() {
+      return { presenca: 0, palavras: 0, toque: 0, cuidado: 0, gestos: 0 };
+    }
+
+    const perguntas = [
+      {
+        bloco: "Como você se sente amada",
+        alvo: "receber",
+        peso: 3,
+        titulo: "Depois de um dia pesado, o que mais faria seu coração descansar?",
+        ajuda: "Escolha o gesto que faria você relaxar por dentro.",
+        opcoes: [
+          ["presenca", "Ele guardar o celular, sentar comigo e me ouvir de verdade."],
+          ["palavras", "Ele dizer que me admira e que percebe o quanto eu me esforço."],
+          ["toque", "Ele me abraçar em silêncio, sem eu precisar explicar tudo."],
+          ["cuidado", "Ele resolver uma coisa prática que estava pesando nas minhas costas."],
+          ["gestos", "Ele trazer algo simples, mas pensado em mim, mostrando que lembrou."]
+        ]
+      },
+      {
+        bloco: "Como você se sente amada",
+        alvo: "receber",
+        peso: 2,
+        titulo: "O que faria você pensar: “ele realmente se importa comigo”?",
+        ajuda: "Pense em uma cena real de relacionamento, não em uma resposta idealizada.",
+        opcoes: [
+          ["cuidado", "Ele notar que estou sobrecarregada e tomar uma atitude sem eu pedir várias vezes."],
+          ["presenca", "Ele separar um tempo só nosso, sem pressa e sem distrações."],
+          ["palavras", "Ele reconhecer minhas qualidades de um jeito específico e sincero."],
+          ["toque", "Ele me procurar com carinho, abraço, beijo ou colo."],
+          ["gestos", "Ele lembrar de um detalhe que eu contei e transformar isso em gesto."]
+        ]
+      },
+      {
+        bloco: "Memória emocional",
+        alvo: "receber",
+        peso: 4,
+        titulo: "Pense em uma vez em que você se sentiu muito amada. O que mais marcou?",
+        ajuda: "A memória costuma revelar mais do que a opinião.",
+        opcoes: [
+          ["presenca", "A pessoa estava totalmente presente comigo."],
+          ["palavras", "As palavras que ela disse ficaram guardadas em mim."],
+          ["toque", "O carinho físico me fez sentir segura, desejada ou acolhida."],
+          ["cuidado", "Ela fez algo concreto para me proteger, ajudar ou aliviar."],
+          ["gestos", "O gesto, presente ou surpresa teve muito significado."]
+        ]
+      },
+      {
+        bloco: "Prioridade afetiva",
+        alvo: "receber",
+        peso: 3,
+        titulo: "Em uma semana corrida, qual gesto teria mais valor para você?",
+        ajuda: "Aqui quase tudo parece bom. Escolha o que teria mais peso emocional.",
+        opcoes: [
+          ["presenca", "Um momento curto, mas inteiro, só nosso."],
+          ["palavras", "Uma mensagem sincera dizendo que me ama e me valoriza."],
+          ["toque", "Um abraço demorado e proximidade física."],
+          ["cuidado", "Ele assumir uma tarefa difícil para eu respirar."],
+          ["gestos", "Uma surpresa pequena que mostre: “eu pensei em você”."]
+        ]
+      },
+      {
+        bloco: "O que dói quando falta",
+        alvo: "dor",
+        peso: 3,
+        titulo: "O que mais te faz se sentir rejeitada ou pouco importante?",
+        ajuda: "Às vezes a falta mostra a necessidade com mais clareza do que o desejo.",
+        opcoes: [
+          ["presenca", "Quando ele está comigo, mas parece longe, distraído ou ausente."],
+          ["palavras", "Quando ele não elogia, não reconhece e quase nunca fala o que sente."],
+          ["toque", "Quando ele evita carinho físico ou parece frio comigo."],
+          ["cuidado", "Quando ele vê que estou carregando tudo e não ajuda."],
+          ["gestos", "Quando ele esquece detalhes, datas ou coisas importantes para mim."]
+        ]
+      },
+      {
+        bloco: "O que dói quando falta",
+        alvo: "dor",
+        peso: 3,
+        titulo: "Quando você se frustra, qual frase parece mais com você?",
+        ajuda: "Pode ser a frase que aparece por dentro, mesmo que você nem sempre fale.",
+        opcoes: [
+          ["presenca", "“Você nunca tem tempo de verdade para mim.”"],
+          ["palavras", "“Você nunca fala nada bonito, parece que não vê o que eu faço.”"],
+          ["toque", "“Você nem me procura mais.”"],
+          ["cuidado", "“Eu faço tudo sozinha.”"],
+          ["gestos", "“Você nunca lembra de nada que é importante para mim.”"]
+        ]
+      },
+      {
+        bloco: "O que dói quando falta",
+        alvo: "dor",
+        peso: 2,
+        titulo: "O que te faz esfriar por dentro, mesmo sem uma grande briga?",
+        ajuda: "Marque o sinal pequeno que, repetido, cria distância.",
+        opcoes: [
+          ["presenca", "Conversas interrompidas, celular no meio e pouca atenção."],
+          ["palavras", "Falta de carinho verbal, elogio ou reconhecimento."],
+          ["toque", "Pouco contato físico e pouca procura."],
+          ["cuidado", "Falta de parceria nas responsabilidades."],
+          ["gestos", "Falta de detalhes, lembranças e pequenas iniciativas."]
+        ]
+      },
+      {
+        bloco: "Como você demonstra amor",
+        alvo: "demonstrar",
+        peso: 3,
+        titulo: "Quando você ama alguém, o que sai de você quase sem esforço?",
+        ajuda: "Essa parte mede como seu amor costuma aparecer nas atitudes.",
+        opcoes: [
+          ["presenca", "Quero estar junto, conversar, acompanhar e criar momentos."],
+          ["palavras", "Elogio, incentivo, mando mensagens e falo o que sinto."],
+          ["toque", "Abraço, beijo, faço carinho e busco proximidade."],
+          ["cuidado", "Cuido, resolvo, ajudo, organizo e tento aliviar a vida da pessoa."],
+          ["gestos", "Dou lembranças, penso em surpresas e preparo detalhes."]
+        ]
+      },
+      {
+        bloco: "Como você demonstra amor",
+        alvo: "demonstrar",
+        peso: 2,
+        titulo: "Se a pessoa que você ama está passando por um problema, sua primeira reação costuma ser:",
+        ajuda: "A resposta mais automática costuma ser a mais reveladora.",
+        opcoes: [
+          ["presenca", "Parar para ouvir e ficar perto."],
+          ["palavras", "Falar algo que fortaleça, conforte ou dê coragem."],
+          ["toque", "Abraçar, tocar e acolher fisicamente."],
+          ["cuidado", "Buscar solução, fazer ligações, organizar ou resolver algo."],
+          ["gestos", "Levar algo, preparar uma surpresa ou criar um pequeno cuidado simbólico."]
+        ]
+      },
+      {
+        bloco: "Como você demonstra amor",
+        alvo: "demonstrar",
+        peso: 2,
+        titulo: "Em datas importantes, você tende a mostrar amor de qual forma?",
+        ajuda: "Pense no seu impulso natural.",
+        opcoes: [
+          ["gestos", "Planejo presente, lembrança, surpresa ou detalhe especial."],
+          ["palavras", "Escrevo, falo, declaro ou faço questão de reconhecer."],
+          ["presenca", "Tento criar uma experiência juntos, mesmo simples."],
+          ["toque", "Busco proximidade, carinho e clima de conexão física."],
+          ["cuidado", "Organizo tudo para a pessoa não se preocupar."]
+        ]
+      },
+      {
+        bloco: "Como você demonstra amor",
+        alvo: "demonstrar",
+        peso: 2,
+        titulo: "No cotidiano, seu cuidado aparece mais em qual gesto?",
+        ajuda: "Amor também aparece no comum, não só nos grandes momentos.",
+        opcoes: [
+          ["cuidado", "Resolver coisas, lembrar tarefas e facilitar a vida."],
+          ["presenca", "Fazer companhia, perguntar como foi o dia e estar disponível."],
+          ["palavras", "Mandar mensagens, elogiar e incentivar."],
+          ["toque", "Encostar, abraçar, beijar e procurar contato."],
+          ["gestos", "Trazer algo que a pessoa gosta ou lembrar de um detalhe."]
+        ]
+      },
+      {
+        bloco: "Como você percebe o parceiro",
+        alvo: "parceiro",
+        peso: 3,
+        titulo: "Quando seu parceiro tenta demonstrar amor, o que ele costuma fazer?",
+        ajuda: "Esta é a sua percepção. Para confirmar, o ideal é ele também responder.",
+        opcoes: [
+          ["cuidado", "Ele ajuda, resolve, trabalha, providencia ou cuida de coisas práticas."],
+          ["presenca", "Ele quer ficar junto, conversar ou compartilhar momentos."],
+          ["palavras", "Ele elogia, incentiva ou fala coisas carinhosas."],
+          ["toque", "Ele busca contato físico, abraço, beijo ou proximidade."],
+          ["gestos", "Ele dá presentes, faz surpresas ou lembra de detalhes."]
+        ]
+      },
+      {
+        bloco: "Como você percebe o parceiro",
+        alvo: "parceiro",
+        peso: 2,
+        titulo: "Quando ele quer se aproximar depois de um desgaste, o que parece mais comum?",
+        ajuda: "Não avalie se é suficiente. Observe o padrão.",
+        opcoes: [
+          ["presenca", "Ele tenta ficar por perto ou puxar conversa."],
+          ["palavras", "Ele fala algo para amenizar, explicar ou demonstrar sentimento."],
+          ["toque", "Ele se aproxima fisicamente, abraça ou tenta tocar."],
+          ["cuidado", "Ele faz algo útil, resolve um problema ou ajuda em alguma coisa."],
+          ["gestos", "Ele compra, leva, oferece ou prepara alguma coisa."]
+        ]
+      },
+      {
+        bloco: "Como você percebe o parceiro",
+        alvo: "parceiro",
+        peso: 2,
+        titulo: "O amor dele costuma parecer mais:",
+        ajuda: "A resposta não define quem ele é. Ela mostra o padrão que você percebe.",
+        opcoes: [
+          ["cuidado", "Prático: ele faz, resolve e providencia."],
+          ["toque", "Físico: ele busca proximidade e contato."],
+          ["presenca", "Presente: ele gosta de estar junto."],
+          ["palavras", "Verbal: ele fala, elogia ou explica."],
+          ["gestos", "Simbólico: ele lembra, presenteia ou faz detalhes."]
+        ]
+      },
+      {
+        bloco: "Como você acha que ele recebe amor",
+        alvo: "parceiroRecebe",
+        peso: 2,
+        titulo: "Pela sua percepção, seu parceiro se sente mais amado quando você:",
+        ajuda: "Essa parte ajuda a montar um mapa inicial do casal.",
+        opcoes: [
+          ["presenca", "Dá atenção, companhia e tempo de qualidade."],
+          ["palavras", "Elogia, reconhece e fala coisas boas."],
+          ["toque", "Demonstra carinho físico e proximidade."],
+          ["cuidado", "Ajuda, cuida e resolve coisas práticas."],
+          ["gestos", "Surpreende, presenteia ou lembra de detalhes."]
+        ]
+      },
+      {
+        bloco: "Como você acha que ele recebe amor",
+        alvo: "parceiroRecebe",
+        peso: 2,
+        titulo: "O que ele mais parece cobrar ou sentir falta?",
+        ajuda: "A cobrança nem sempre é direta. Às vezes aparece em comentários pequenos.",
+        opcoes: [
+          ["presenca", "Mais tempo, atenção ou companhia."],
+          ["palavras", "Mais reconhecimento, elogio ou validação."],
+          ["toque", "Mais carinho físico, desejo ou proximidade."],
+          ["cuidado", "Mais ajuda, parceria ou atitude prática."],
+          ["gestos", "Mais detalhes, lembranças ou iniciativas especiais."]
+        ]
+      }
+    ];
+
+    function iniciar() {
+      document.getElementById("hero").style.display = "none";
+      document.getElementById("como-funciona").style.display = "none";
+      document.getElementById("app").classList.add("ativo");
+      estado.atual = -1;
+      renderInicio();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderInicio() {
+      atualizarProgresso();
+      const card = document.getElementById("perguntaCard");
+      card.innerHTML = `
+        <div>
+          <div class="bloco">Antes de começar</div>
+          <h2 class="pergunta-titulo">Vamos montar sua Roda Afetiva.</h2>
+          <p class="ajuda">
+            O teste vai identificar quatro leituras: como você se sente amada, como demonstra amor,
+            o que mais dói quando falta e como percebe o parceiro. Você não precisa saber sua resposta antes.
+          </p>
+
+          <div class="formulario">
+            <div class="campo">
+              <label for="nome">Seu nome ou apelido</label>
+              <input id="nome" placeholder="Ex.: Ana" value="${estado.perfil.nome || ""}" />
+            </div>
+
+            <div class="campo">
+              <label for="parceiro">Nome ou apelido do parceiro, opcional</label>
+              <input id="parceiro" placeholder="Ex.: João" value="${estado.perfil.parceiro || ""}" />
+            </div>
+
+            <div class="campo">
+              <label>Como você quer usar o teste?</label>
+              <div class="modo-grid">
+                <div class="modo-card ${estado.perfil.modo === "individual" ? "selecionado" : ""}" onclick="selecionarModo('individual')">
+                  <strong>Individual</strong>
+                  <span class="texto-pequeno">Quero entender como eu sinto e demonstro amor.</span>
+                </div>
+                <div class="modo-card ${estado.perfil.modo === "casal" ? "selecionado" : ""}" onclick="selecionarModo('casal')">
+                  <strong>Casal</strong>
+                  <span class="texto-pequeno">Quero comparar também com minha percepção do parceiro.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <span class="texto-pequeno">Responda com sinceridade. O resultado é um mapa, não uma sentença.</span>
+          <button class="botao primario" onclick="comecarPerguntas()">Iniciar perguntas</button>
+        </div>
+      `;
+    }
+
+    function selecionarModo(modo) {
+      estado.perfil.modo = modo;
+      estado.perfil.nome = document.getElementById("nome")?.value || "";
+      estado.perfil.parceiro = document.getElementById("parceiro")?.value || "";
+      renderInicio();
+    }
+
+    function comecarPerguntas() {
+      estado.perfil.nome = document.getElementById("nome").value.trim() || "Você";
+      estado.perfil.parceiro = document.getElementById("parceiro").value.trim();
+      estado.atual = 0;
+      renderPergunta();
+    }
+
+    function renderPergunta() {
+      const q = perguntas[estado.atual];
+      const selecionada = estado.respostas[estado.atual]?.tipo;
+      const letras = ["A", "B", "C", "D", "E"];
+
+      atualizarProgresso();
+
+      document.getElementById("perguntaCard").innerHTML = `
+        <div>
+          <div class="bloco">${q.bloco}</div>
+          <h2 class="pergunta-titulo">${q.titulo}</h2>
+          <p class="ajuda">${q.ajuda}</p>
+
+          <div class="opcoes">
+            ${q.opcoes.map((opcao, i) => {
+              const [tipo, texto] = opcao;
+              return `
+                <button class="opcao ${selecionada === tipo ? "selecionada" : ""}" onclick="responder(${i})">
+                  <span class="letra">${letras[i]}</span>
+                  <span>
+                    <span class="opcao-texto">${texto}</span>
+                    <span class="mapa-opcao">${TIPOS[tipo].nome} · peso ${q.peso}</span>
+                  </span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </div>
+
+        <div class="nav">
+          <button class="botao secundario" onclick="voltar()">${estado.atual === 0 ? "Voltar ao início" : "Pergunta anterior"}</button>
+          <button class="botao primario" onclick="avancar()" ${selecionada ? "" : "disabled style='opacity:.45;cursor:not-allowed'"}>${estado.atual === perguntas.length - 1 ? "Ver minha roda" : "Próxima"}</button>
+        </div>
+      `;
+    }
+
+    function responder(indice) {
+      const q = perguntas[estado.atual];
+      const [tipo, texto] = q.opcoes[indice];
+      estado.respostas[estado.atual] = { tipo, texto, alvo: q.alvo, peso: q.peso };
+      renderPergunta();
+    }
+
+    function voltar() {
+      if (estado.atual <= 0) {
+        estado.atual = -1;
+        renderInicio();
+      } else {
+        estado.atual--;
+        renderPergunta();
+      }
+    }
+
+    function avancar() {
+      if (!estado.respostas[estado.atual]) return;
+
+      if (estado.atual === perguntas.length - 1) {
+        calcular();
+        mostrarResultado();
+      } else {
+        estado.atual++;
+        renderPergunta();
+      }
+    }
+
+    function atualizarProgresso() {
+      const total = perguntas.length;
+      const atual = estado.atual < 0 ? 0 : estado.atual;
+      const pct = Math.round((Math.max(atual, 0) / total) * 100);
+
+      document.getElementById("progressoBarra").style.width = pct + "%";
+      document.getElementById("progressoNumero").textContent = pct + "%";
+      document.getElementById("progressoTexto").textContent = estado.atual < 0 ? "Início" : `${estado.atual + 1} de ${total}`;
+    }
+
+    function alternarModoDev() {
+      estado.mostrarCategorias = !estado.mostrarCategorias;
+      document.body.classList.toggle("dev", estado.mostrarCategorias);
+    }
+
+    function calcular() {
+      estado.pontos = {
+        receber: base(),
+        dor: base(),
+        demonstrar: base(),
+        parceiro: base(),
+        parceiroRecebe: base()
+      };
+
+      Object.values(estado.respostas).forEach(resposta => {
+        estado.pontos[resposta.alvo][resposta.tipo] += resposta.peso;
+      });
+
+      Object.keys(estado.pontos).forEach(grupo => {
+        estado.pontos[grupo] = normalizar(estado.pontos[grupo]);
+      });
+    }
+
+    function normalizar(pontos) {
+      const maximo = Math.max(...Object.values(pontos), 1);
+      const normalizado = {};
+      Object.keys(pontos).forEach(chave => {
+        normalizado[chave] = Math.max(1, Math.round((pontos[chave] / maximo) * 10));
+      });
+      return normalizado;
+    }
+
+    function maior(pontos) {
+      return Object.entries(pontos).sort((a,b) => b[1] - a[1])[0][0];
+    }
+
+    function ordenado(pontos) {
+      return Object.entries(pontos).sort((a,b) => b[1] - a[1]);
+    }
+
+    function mostrarResultado() {
+      document.getElementById("app").classList.remove("ativo");
+      document.getElementById("app").style.display = "none";
+      document.getElementById("resultado").classList.add("ativo");
+      document.getElementById("resultado").scrollIntoView({ behavior: "smooth" });
+
+      const nome = estado.perfil.nome || "Você";
+      const recebe = maior(estado.pontos.receber);
+      const dor = maior(estado.pontos.dor);
+      const demonstra = maior(estado.pontos.demonstrar);
+      const parceiro = maior(estado.pontos.parceiro);
+      const parceiroRecebe = maior(estado.pontos.parceiroRecebe);
+
+      document.getElementById("tituloResultado").textContent = `${nome}, esta é sua Roda Afetiva`;
+      document.getElementById("introResultado").innerHTML = `
+        Seu mapa aponta que você tende a se sentir amada por <strong>${TIPOS[recebe].nome}</strong>
+        e costuma demonstrar amor por <strong>${TIPOS[demonstra].nome}</strong>.
+        A área que mais dói quando falta aparece como <strong>${TIPOS[dor].nome}</strong>.
+      `;
+
+      document.getElementById("insightReceber").textContent = TIPOS[recebe].recebe;
+      document.getElementById("insightDemonstrar").textContent = TIPOS[demonstra].entrega;
+      document.getElementById("insightDesencontro").textContent = montarDesencontro(recebe, demonstra, parceiro, parceiroRecebe);
+      document.getElementById("fraseConversa").innerHTML = `
+        <strong>Frase prática para conversar:</strong><br>
+        “${TIPOS[recebe].frase} Não estou te acusando. Estou tentando te mostrar como meu coração entende amor.”
+      `;
+      document.getElementById("plano7").innerHTML = `
+        Dia 1: observe quando você se sente amada.<br>
+        Dia 2: perceba o que te machuca quando falta.<br>
+        Dia 3: peça ${TIPOS[recebe].curto.toLowerCase()} de forma clara.<br>
+        Dia 4: reconheça um gesto recebido.<br>
+        Dia 5: ofereça amor com intenção, não só no automático.<br>
+        Dia 6: pergunte como o outro recebe amor.<br>
+        Dia 7: compare o que mudou.
+      `;
+      document.getElementById("proximaConversa").innerHTML = `
+        Comece com uma pergunta simples: <strong>“O que eu faço que mais te faz se sentir amado?”</strong>
+        Depois conte sua descoberta sem cobrança: <strong>“Eu percebi que, para mim, ${TIPOS[recebe].curto.toLowerCase()} pesa muito.”</strong>
+      `;
+
+      estado.grafico = "receber";
+      renderListas();
+      desenharGrafico();
+      setTimeout(animarBarras, 100);
+    }
+
+    function montarDesencontro(recebe, demonstra, parceiro, parceiroRecebe) {
+      let texto = "";
+
+      if (recebe === demonstra) {
+        texto = `Há coerência entre o que você mais precisa receber e o que costuma entregar: ${TIPOS[recebe].nome.toLowerCase()}. O cuidado é não presumir que o outro recebe amor da mesma forma.`;
+      } else {
+        texto = `Você pode estar oferecendo amor por ${TIPOS[demonstra].nome.toLowerCase()}, mas esperando receber ${TIPOS[recebe].nome.toLowerCase()}. Esse desalinhamento pode gerar a sensação de “eu faço muito, mas ainda não me sinto amada”.`;
+      }
+
+      if (estado.perfil.modo === "casal") {
+        texto += ` Pela sua percepção, ${estado.perfil.parceiro || "seu parceiro"} demonstra amor principalmente por ${TIPOS[parceiro].nome.toLowerCase()} e talvez receba melhor ${TIPOS[parceiroRecebe].nome.toLowerCase()}.`;
+      }
+
+      return texto;
+    }
+
+    function trocarGrafico(tipo, elemento) {
+      estado.grafico = tipo;
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("ativa"));
+      elemento.classList.add("ativa");
+      renderListas();
+      desenharGrafico();
+      setTimeout(animarBarras, 80);
+    }
+
+    function renderListas() {
+      const box = document.getElementById("listas");
+      let grupos = [];
+
+      if (estado.grafico === "comparativo") {
+        grupos = [
+          ["Eu sinto", estado.pontos.receber],
+          ["Eu demonstro", estado.pontos.demonstrar],
+          ["Parceiro demonstra", estado.pontos.parceiro]
+        ];
+      } else {
+        const titulos = {
+          receber: "Como você sente amor",
+          dor: "O que mais dói quando falta",
+          demonstrar: "Como você demonstra amor",
+          parceiro: "Como você percebe seu parceiro",
+          parceiroRecebe: "Como você acha que ele recebe amor"
+        };
+        grupos = [[titulos[estado.grafico], estado.pontos[estado.grafico]]];
+      }
+
+      box.innerHTML = grupos.map(([titulo, pontos]) => `
+        <div class="lista-pontos">
+          <strong style="color:var(--vinho-escuro)">${titulo}</strong>
+          ${ordenado(pontos).map(([tipo, valor]) => `
+            <div class="linha-ponto">
+              <span>${TIPOS[tipo].curto}</span>
+              <div class="barra"><span data-width="${valor * 10}%" style="background:${TIPOS[tipo].cor}"></span></div>
+              <strong>${valor}</strong>
+            </div>
+          `).join("")}
+        </div>
+      `).join("<br>");
+    }
+
+    function animarBarras() {
+      document.querySelectorAll(".barra span").forEach(span => {
+        span.style.width = span.getAttribute("data-width");
+      });
+    }
+
+    function desenharGrafico() {
+      const canvas = document.getElementById("radar");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const raio = 330;
+      const chaves = Object.keys(TIPOS);
+      const inicio = -Math.PI / 2;
+
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.fillStyle = "rgba(255,255,255,.54)";
+      arredondar(ctx, 34, 34, w - 68, h - 68, 54);
+      ctx.fill();
+
+      for (let nivel = 1; nivel <= 5; nivel++) {
+        const r = raio * (nivel / 5);
+        ctx.beginPath();
+        chaves.forEach((chave, i) => {
+          const ang = inicio + i * (Math.PI * 2 / chaves.length);
+          const x = cx + Math.cos(ang) * r;
+          const y = cy + Math.sin(ang) * r;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.strokeStyle = "rgba(125,32,54,.12)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      chaves.forEach((chave, i) => {
+        const ang = inicio + i * (Math.PI * 2 / chaves.length);
+        const x = cx + Math.cos(ang) * raio;
+        const y = cy + Math.sin(ang) * raio;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = "rgba(125,32,54,.10)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        const lx = cx + Math.cos(ang) * (raio + 80);
+        const ly = cy + Math.sin(ang) * (raio + 80);
+
+        ctx.fillStyle = TIPOS[chave].cor;
+        ctx.font = "600 34px 'Cormorant Garamond', Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        textoCanvas(ctx, TIPOS[chave].curto, lx, ly, 130, 34);
+      });
+
+      if (estado.grafico === "comparativo") {
+        formaRadar(ctx, estado.pontos.receber, "rgba(139,94,215,.18)", "#8b5ed7");
+        formaRadar(ctx, estado.pontos.demonstrar, "rgba(127,111,101,.16)", "#7f6f65");
+        formaRadar(ctx, estado.pontos.parceiro, "rgba(200,165,106,.16)", "#c8a56a");
+        legendaCanvas(ctx, [
+          ["Eu sinto", "#8b5ed7"],
+          ["Eu demonstro", "#7f6f65"],
+          ["Parceiro", "#c8a56a"]
+        ]);
+      } else {
+        formaRadar(ctx, estado.pontos[estado.grafico], "rgba(125,32,54,.16)", "#7d2036");
+      }
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 58, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,.91)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(200,165,106,.30)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = "#581326";
+      ctx.font = "600 28px 'Cormorant Garamond', Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.fillText("0–10", cx, cy + 8);
+    }
+
+    function formaRadar(ctx, pontos, fill, stroke) {
+      const w = ctx.canvas.width;
+      const h = ctx.canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const raio = 330;
+      const chaves = Object.keys(TIPOS);
+      const inicio = -Math.PI / 2;
+
+      ctx.beginPath();
+      chaves.forEach((chave, i) => {
+        const ang = inicio + i * (Math.PI * 2 / chaves.length);
+        const r = raio * (pontos[chave] / 10);
+        const x = cx + Math.cos(ang) * r;
+        const y = cy + Math.sin(ang) * r;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      chaves.forEach((chave, i) => {
+        const ang = inicio + i * (Math.PI * 2 / chaves.length);
+        const r = raio * (pontos[chave] / 10);
+        const x = cx + Math.cos(ang) * r;
+        const y = cy + Math.sin(ang) * r;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 12, 0, Math.PI * 2);
+        ctx.fillStyle = stroke;
+        ctx.fill();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+      });
+    }
+
+    function legendaCanvas(ctx, itens) {
+      const x = 72;
+      let y = 72;
+      ctx.font = "600 28px 'Cormorant Garamond', Georgia, serif";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+
+      itens.forEach(([texto, cor]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = cor;
+        ctx.fill();
+        ctx.fillStyle = "#581326";
+        ctx.fillText(texto, x + 22, y + 1);
+        y += 38;
+      });
+    }
+
+    function arredondar(ctx, x, y, largura, altura, raio) {
+      ctx.beginPath();
+      ctx.moveTo(x + raio, y);
+      ctx.arcTo(x + largura, y, x + largura, y + altura, raio);
+      ctx.arcTo(x + largura, y + altura, x, y + altura, raio);
+      ctx.arcTo(x, y + altura, x, y, raio);
+      ctx.arcTo(x, y, x + largura, y, raio);
+      ctx.closePath();
+    }
+
+    function textoCanvas(ctx, texto, x, y, larguraMax, alturaLinha) {
+      const palavras = texto.split(" ");
+      let linha = "";
+      const linhas = [];
+
+      for (const palavra of palavras) {
+        const teste = linha ? linha + " " + palavra : palavra;
+        if (ctx.measureText(teste).width > larguraMax && linha) {
+          linhas.push(linha);
+          linha = palavra;
+        } else {
+          linha = teste;
+        }
+      }
+
+      linhas.push(linha);
+      const yInicio = y - ((linhas.length - 1) * alturaLinha / 2);
+      linhas.forEach((l, i) => ctx.fillText(l, x, yInicio + i * alturaLinha));
+    }
+
+    function compartilharWhatsApp() {
+      const recebe = maior(estado.pontos.receber);
+      const demonstra = maior(estado.pontos.demonstrar);
+      const dor = maior(estado.pontos.dor);
+      const nome = estado.perfil.nome || "Meu";
+
+      const texto =
+        `${nome} resultado da Roda Afetiva:%0A%0A` +
+        `Sinto amor por: ${TIPOS[recebe].nome}%0A` +
+        `Demonstro amor por: ${TIPOS[demonstra].nome}%0A` +
+        `Quando falta, dói mais: ${TIPOS[dor].nome}%0A%0A` +
+        `Frase importante: ${TIPOS[recebe].frase}`;
+
+      window.open(`https://wa.me/?text=${texto}`, "_blank");
+    }
+
+    function refazer() {
+      estado.atual = -1;
+      estado.respostas = {};
+      estado.pontos = {
+        receber: base(),
+        dor: base(),
+        demonstrar: base(),
+        parceiro: base(),
+        parceiroRecebe: base()
+      };
+
+      document.getElementById("resultado").classList.remove("ativo");
+      document.getElementById("app").style.display = "block";
+      document.getElementById("app").classList.add("ativo");
+      renderInicio();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
